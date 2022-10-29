@@ -1,10 +1,10 @@
-import Head from 'next/head'
-import Header from '../components/Header'
-import Nav from '../components/Nav'
-import Results from '../components/Results'
-import requests from '../utils/requests'
+import Head from "next/head";
+import Header from "../components/Header";
+import Nav from "../components/Nav";
+import Results from "../components/Results";
+import requests from "../utils/requests";
 
-export default function Home({results}) {
+export default function Home({ results }) {
   return (
     <body className="bg-[#06202A] text-gray-300">
       <Head>
@@ -16,19 +16,21 @@ export default function Home({results}) {
 
       <Nav />
 
-      <Results results={results}/>
+      <Results results={results} />
     </body>
-  )
+  );
 }
 
-export async function getServerSideProps(context){
+export async function getServerSideProps(context) {
   const genre = context.query.genre;
   const request = await fetch(
-    `https://api.themoviedb.org/3${requests[genre]?.url || requests.fetchTrending}`)
-    .then( (res)=>res.json())
+    `https://api.themoviedb.org/3${
+      requests[genre]?.url || requests.fetchTrending.url
+    }`
+  ).then((res) => res.json());
   return {
-    props:{
+    props: {
       results: request.results,
-    }
-  }
+    },
+  };
 }
